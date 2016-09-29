@@ -289,14 +289,14 @@ var ADORE = window.ADORE || {};
 			didScroll = true;
 		});
 	
-		setInterval(function() {
+		// setInterval(function() {
 	
-				if( $(window).scrollTop() > 20 ) {
-					$menu.addClass('sticky-header');
-				} else {
-					$menu.removeClass('sticky-header');
-				}
-		}, 250);
+		// 		if( $(window).scrollTop() > 0 ) {
+		// 			$menu.addClass('sticky-header');
+		// 		} else {
+		// 			$menu.removeClass('sticky-header');
+		// 		}
+		// }, 250);
 	}
 /* ==================================================
 	Responsive Nav Menu

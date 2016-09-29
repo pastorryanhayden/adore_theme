@@ -121,36 +121,34 @@ layout: default
                                 	<div class="title-row">
                                 		<h4>Very latest</h4>
                                     </div>
-                                    <a href="blog-post.html" class="media-box post-thumb">
-                                        <img src="{{post.featured_image[0].url}}" alt="">
+                                    <a href="{{ post.title | datapage_url: 'blog-posts' | prepend: site.baseurl | prepend: site.url }}" class="media-box post-thumb">
+                                    {% if post.featured_image[0].url %}
+                                    <img src="{{post.featured_image[0].url}}" alt="">
+                                    {% else %}
+                                    <img src="{{site.default_blog_image}}" alt="">
+                                    {% endif %}
+                                        
                                     </a>
-                                    <h3 class="post-title"><a href="blog-post.html">{{post.title}}</a></h3>
-                                    <div class="meta-data">by <a href="#">imithemes</a> on 25th August, 2014 in <a href="#">General</a></div>
-                                    {{post.body_content | markdownify | truncate: 140}}
-                                    <p><a href="blog-post.html" class="basic-link">Continue reading</a></p>
+                                    <h3 class="post-title"><a href="{{ post.title | datapage_url: 'blog-posts' | prepend: site.baseurl | prepend: site.url }}">{{post.title}}</a></h3>
+                                    <div class="meta-data">by <a href="#">{{post.author_name}}</a> on {{post.date_added | date: "%B %d, %Y"}} in <a href="{{ post.title | datapage_url: 'blog-posts' | prepend: site.baseurl | prepend: site.url }}">{{post.categories[0]}}</a></div>
+                                    {{post.body_content | truncate: 140 | markdownify  }}
+                                    <p><a href="{{ post.title | datapage_url: 'blog-posts' | prepend: site.baseurl | prepend: site.url }}" class="basic-link">Continue reading</a></p>
                                 </div><!--/title-row-->
+                                {% endfor %}
                             </div><!--/very-latest-post-->
-                              {% endfor %}
+                              
                             <div class="col-md-6">
                                 <ul class="blog-classic-listing">
+                                {% for post in site.data.blog offset: 1 limit: 3 %}
                                     <li>
-                                      	<a href="blog-post.html"><strong class="post-title">Hear my people’s cry for peace</strong></a>
-                                       	<div class="meta-data">by <a href="#">imithemes</a> on 25th August, 2014 in <a href="#">General</a></div>
-                                      	<p>Nulla consequat massa quis enim.Donec pede justo, fringilla vel, aliquet nec, vulputate eget...</p>
-                                     	<p><a href="blog-post.html" class="basic-link">Continue reading</a></p>
-                                 	</li>
-                                    <li>
-                                      	<a href="blog-post.html"><strong class="post-title">Robin Williams: The death of our captain</strong></a>
-                                       	<div class="meta-data">by <a href="#">imithemes</a> on 12th August, 2014 in <a href="#">General</a></div>
-                                      	<p>Nulla consequat massa quis enim.Donec pede justo, fringilla vel, aliquet nec, vulputate eget...</p>
-                                     	<p><a href="blog-post.html" class="basic-link">Continue reading</a></p>
-                                 	</li>
-                                    <li>
-                                      	<a href="blog-post.html"><strong class="post-title">EPPN: It’s Time For Prison Reform</strong></a>
-                                       	<div class="meta-data">by <a href="#">imithemes</a> on 31st July, 2014 in <a href="#">General</a></div>
-                                      	<p>Nulla consequat massa quis enim.Donec pede justo, fringilla vel, aliquet nec, vulputate eget...</p>
-                                     	<p><a href="blog-post.html" class="basic-link">Continue reading</a></p>
-                                 	</li>
+                                      	<a href="{{ post.title | datapage_url: 'blog-posts'| prepend: site.url }}"><strong class="post-title">{{post.title}}</strong></a>
+                                       	<div class="meta-data">by {{post.author_name}} on {{post.date_added | date: "%B %d, %Y"}} in {{post.categories[0]}}</div>
+                                           {% if post.body_content %}
+                                      	<p>{{ post.body_content | truncatewords: 20 | markdownify }}</p>
+                                          {% endif %}
+                                     	<p><a href="{{ post.title | datapage_url: 'blog-posts'| prepend: site.url }}" class="basic-link"> Continue reading </a></p>
+                                    </li>
+                                 {% endfor %}  
                                 </ul>
                             </div><!--/classic-listing-->
                         </div><!--/col-md-8-->
@@ -158,34 +156,51 @@ layout: default
                     <div class="col-md-4">
                     	<div class="widget latest_sermons_widget">
                         	<ul>
+                                {% for sermon in site.data.sermons limit: 1 %}
+                                
                             	<li class="most-recent-sermon clearfix">
                                     <h3>Recent Sermons</h3>
                                     <hr class="sm">
-                                    <div class="latest-sermon-video fw-video">
-                                        <iframe src="https://player.vimeo.com/video/37540860?title=0&amp;byline=0&amp;portrait=0" width="500" height="281"></iframe>
+                                    <div class="latest-sermon-video">
+                                        {% if  sermon.series_featured_image[0].url %}
+                                            <img src="{{sermon.series_featured_image[0].url}}" alt="">
+                                        {% else %}
+                                            <img src="{{site.default_sermon_image}}" alt="">
+                                        {% endif %}
+                                        
                                     </div>
                                     <div class="latest-sermon-content">
-                                        <h4><a href="single-sermon.html">Rushing wind</a></h4>
-                                        <div class="meta-data">by <a href="#">Chris Hodges</a></div>
-                                        <p>Nulla consequat massa quis enim, aliquet nec nulla consequat massa quis enim, vulputate eget...</p>
+                                        <h4><a href="#">{{sermon.title}}</a></h4>
+                                        <div class="meta-data">by <a href="#">{{sermon.speaker_name}}</a></div>
+                                        <ul class="sermonDetails">
+                                            <li><i class="fa fa-book"></i> {{sermon.bible_text}}</li>
+                                            <li><i class="fa fa-th-list"></i> {{sermon.series_title}}</li>
+                                            <li><i class="fa fa-calendar"></i> {{sermon.service}}</li>
+                                        </ul>
                                     </div>
                                     <div class="sermon-links">
                                         <ul class="action-buttons">
-                                            <li><a href="single-sermon.html" data-toggle="tooltip" data-placement="right" data-original-title="Watch Video"><i class="icon-video-cam"></i></a></li>
-                                            <li><a href="single-sermon.html" data-toggle="tooltip" data-placement="right" data-original-title="Listen Audio"><i class="icon-headphones"></i></a></li>
-                                            <li><a href="single-sermon.html" data-toggle="tooltip" data-placement="right" data-original-title="Download Audio"><i class="icon-cloud-download"></i></a></li>
-                                            <li><a href="single-sermon.html" data-toggle="tooltip" data-placement="right" data-original-title="Download PDF"><i class="icon-download-folder"></i></a></li>
+                                            {% if  sermon.sermon_mp3 %}
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" data-original-title="Listen Audio"><i class="icon-headphones"></i></a></li>
+                                            {% endif %}
+                                            {% if  sermon.slides %}
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" data-original-title="Download Slides"><i class="icon-blackboard-graph"></i></a></li>
+                                            {% endif %}
+                                            {% if  sermon.handout %}
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" data-original-title="Download PDF"><i class="icon-paper-sheet"></i></a></li>
+                                            {% endif %}
                                         </ul>
                                     </div>
-                               	</li>
+                               	</li><!--/MOST RECENT-->
+                                   {% endfor %}
+                                   {% for sermon in site.data.sermons offset: 1 limit: 2 %}
+                                   
                                 <li>
-                                 	<a href="single-sermon.html"><strong class="post-title">Worship God’s Way</strong></a>
-                                        <div class="meta-data">by <a href="#">Dino Rizzo</a></div>
+                                 	<a href="#"><strong class="post-title">{{sermon.title}}</strong></a>
+                                        <div class="meta-data">by <a href="#">{{sermon.speaker_name}}</a> in <a href="#">{{sermon.series_title}}</a></div>
                                 </li>
-                                <li>
-                                 	<a href="single-sermon.html"><strong class="post-title">What God Really Wants</strong></a>
-                                        <div class="meta-data">by <a href="#">Chris Hodges</a></div>
-                                </li>
+                                {% endfor %}
+                                
                            	</ul>
                         </div>
                     </div>
@@ -197,25 +212,17 @@ layout: default
     <!-- Gallery updates -->
     <div class="gallery-updates cols5 clearfix">
     	<ul>
-        	<li class="format-image"><a href="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"><img src="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" alt=""></a></li>
-        	<li class="format-standard">
-            	<div class="flexslider galleryflex" data-autoplay="yes" data-pagination="yes" data-arrows="no" data-style="slide" data-pause="yes">
-                    <ul class="slides">
-                      	<li class="item"><a href="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto[postname1]"><img src="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" alt=""></a></li>
-                      	<li class="item"><a href="http://placehold.it/800x500&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto[postname1]"><img src="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" alt=""></a></li>
-              		</ul>
-               	</div>
-          	</li>
-        	<li class="format-image"><a href="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto" class="media-box"><img src="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" alt=""></a></li>
-        	<li class="format-standard">
+                    {% for group in site.data.photos | limit: 6 %}
+                    <li class="format-standard">
             	<div class="flexslider galleryflex" data-autoplay="yes" data-pagination="yes" data-arrows="no" data-style="fade" data-speed="4000" data-pause="yes">
                     <ul class="slides">
-                      	<li class="item"><a href="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto[postname2]"><img src="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" alt=""></a></li>
-                      	<li class="item"><a href="http://placehold.it/400x400&amp;text=IMAGE+PLACEHOLDER" data-rel="prettyPhoto[postname2]"><img src="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" alt=""></a></li>
-              		</ul>
+            {% for img in group.gallery | limit: 3 %}
+        <li class="item"><a href="{{img.url}}" data-rel="prettyPhoto[postname2]"><img src="{{img.thumbnails.large.url}}" alt=""></a></li>
+         {% endfor %} <!--/end individual images-->
+                       		</ul>
                	</div>
           	</li>
-        	<li class="format-video"><a href="http://vimeo.com/37540860" data-rel="prettyPhoto" class="media-box"><img src="http://placehold.it/600x600&amp;text=IMAGE+PLACEHOLDER" alt=""></a></li>
+          {% endfor %} <!--/ end gallery loop --> 
       	</ul>
         <div class="gallery-updates-overlay">
         	<div class="container">
