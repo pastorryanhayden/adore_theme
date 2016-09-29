@@ -1,75 +1,64 @@
 ---
 layout: default
 ---
-<div class="nav-backed-header parallax" style="background-image:url(images/slide2.jpg);">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <ol class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
-            <li class="active">Events Calender</li>
-          </ol>
+<!-- Start Page Header -->
+    <div class="page-header parallax clearfix">
+        <div class="title-subtitle-holder">
+        	<div class="title-subtitle-holder-inner">
+    			<h2>Upcoming Events</h2>
+        	</div>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- End Nav Backed Header --> 
-  <!-- Start Page Header -->
-  <div class="page-header">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h1>Events Calender</h1>
+    <!-- End Page Header -->
+    <!-- Breadcrumbs -->
+    <div class="lgray-bg breadcrumb-cont">
+    	<div class="container">
+          	<ol class="breadcrumb">
+            	<li><a href="{{site.url}}index.html">Home</a></li>
+            	<li class="active">Upcoming Events</li>
+          	</ol>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- End Page Header --> 
+    <!-- Start Body Content -->
   <!-- Start Content -->
   <div class="main" role="main">
     <div id="content" class="content full">
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-10 col-md-offset-1">
             <div id='calendar'>
                 
-<div class="calendar-list col-md-10 col-md-offset-1" >
-<div class="calendar-list-content">
-    {% for event in site.data.events %}
-    <div class="calendar-list-item">
-        <div class="col-md-3">
-        {% if  event.featured_image %}
-        {% for img in event.featured_image %}
-        <img src="{{img.url}}" alt="{{event.event_name}}">
-        {% endfor %}
-        {% else %}
-        <img src="{{site.default_calendar_image}}" alt="">
-        {% endif %}
-        </div><!--/col-md-3-->
-        <div class="details col-md-9">
-            <h3><a href="{{ event.event_name | datapage_url: 'events' | prepend: site.baseurl | prepend: site.url }}">{{event.event_name}}</a></h3>
-            <div class="details-inner">
-                <div class="details-description">
-                    {% if event.description  %}
-                    {{ event.description | markdownify | truncate: 140 }}
-                    {% endif %}
-                    <a href="{{ event.event_name | datapage_url: 'events' | prepend: site.baseurl | prepend: site.url }}" class="button hollow">More Details</a>
-                </div><!--/details-description-->
-                <div class="details-date">
-                    <p class="month">{{event.DateTime | date: "%b"}}</p>
-                    <p class="day">{{event.DateTime | date: "%d"}}</p>
-                </div><!--/details-date-->
-            </div><!--/details-inner-->
-        </div><!--/details-->
-    </div><!--/calendar-list-item-->
-    {% endfor %}
-   
-</div><!--/calendar-list-content-->
-</div><!--/calendar-list-->
+            <div class="events-listing-content">
+                            {% for event in site.data.events %}
+                            
+                                <div class="event-list-item event-dynamic">
+                                	<div class="event-list-item-date">
+                                    	<span class="event-date">
+                                        	<span class="event-day">{{event.DateTime | date: "%d"}}</span>
+                                        	<span class="event-month">{{event.DateTime | date: "%b"}}</span>
+                                        </span>
+                                    </div><!--/event-list-date-->
+                                    <div class="event-list-item-info">
+                                    	<div class="lined-info">
+                                        	<h4><a href="{{ event.event_name | datapage_url: 'events' | prepend: site.baseurl | prepend: site.url }}" class="event-title">{{event.event_name}}</a></h4>
+                                        </div><!--/lined-info-->
+                                    	
+                                    	<div class="lined-info event-location">
+                                        	<span class="meta-data"><span class="event-location-address">{{event.description}}</span></span>
+                                        </div><!--/lined-info-->
+                                    </div><!--/event-list-item-info-->
+                                    <div class="event-list-item-actions">
+                                    	<a href="{{ event.event_name | datapage_url: 'events' | prepend: site.baseurl | prepend: site.url }}" class="btn btn-default btn-transparent ">Learn More</a>
+                                    
+                                    </div><!--/event-list-item-actions-->
+                                </div><!--/event-list-item-->
+                               {% endfor %}
+                            </div><!--/events-listing-content-->
+                        </div><!--/events-listing-->
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            </div><!--/calendar-->
+          </div><!--/col-md-12-->
+        </div><!--/row-->
+      </div><!--/container-->
+    </div><!--/content-->
+  </div><!--/main-->
