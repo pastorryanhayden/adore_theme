@@ -1,33 +1,26 @@
 ---
 layout: default
 ---
-  <!-- Start Nav Backed Header -->
-  <div class="nav-backed-header parallax">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <ol class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li class="active">{{page.title}}</li>
-          </ol>
+<!-- Start Page Header -->
+    <div class="page-header parallax clearfix">
+        <div class="title-subtitle-holder">
+        	<div class="title-subtitle-holder-inner">
+    			<h2>Upcoming Events: <br> {{page.title}}</h2>
+        	</div>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- End Nav Backed Header --> 
-  <!-- Start Page Header -->
-  <div class="page-header">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-10 col-sm-10 col-xs-8">
-          <h1>Events</h1>
+    <!-- End Page Header -->
+    <!-- Breadcrumbs -->
+    <div class="lgray-bg breadcrumb-cont">
+    	<div class="container">
+          	<ol class="breadcrumb">
+            	<li><a href="{{site.url}}index.html">Home</a></li>
+              <li><a href="{{site.url}}calendar-list.html">Events</a></li>
+            	<li class="active">{{page.title}}</li>
+          	</ol>
         </div>
-        <div class="col-md-2 col-sm-2 col-xs-4"> <a href="{{site.url}}calendar-list.html" class="pull-right btn btn-primary">All events</a> </div>
-      </div>
     </div>
-  </div>
-  <!-- End Page Header --> 
+    <!-- Start Body Content -->
   <!-- Start Content -->
   <div class="main" role="main">
     <div id="content" class="content full">
@@ -45,8 +38,8 @@ layout: default
         {% endfor %}
         {% else %}
         <img src="{{site.default_calendar_image}}" alt="" class="img-responsive">
-        {% endif %} 
-              <div class="event-description"> 
+        {% endif %}
+              <div class="event-description">
               </div>
                 <div class="spacer-20"></div>
                 <div class="row">
@@ -56,8 +49,8 @@ layout: default
                         <h3 class="panel-title">Event details</h3>
                       </div>
                       <div class="panel-body">
-                        <ul class="info-table">
-                          <li><i class="fa fa-calendar"></i> <strong>{{page.DateTime | date: "%A"}}</strong> | {{page.DateTime | date: "%b %d, %y" }}</li> 
+                        <ul class="info-table" style="list-style-type: none;">
+                          <li><i class="fa fa-calendar"></i> <strong>{{page.DateTime | date: "%A"}}</strong> | {{page.DateTime | date: "%B %d, %Y" }}</li>
                         </ul>
                       </div>
                     </div>
