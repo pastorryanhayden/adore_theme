@@ -36,7 +36,9 @@
                     <li><a href="javascript:void(0)">Ministries</a>
                   		<ul class="dropdown">
                     		{% for item in site.data.ministries %}
+                        {% unless item.Exclude_from_menus %}
                          <li><a href="{{ item.name | datapage_url: 'ministries' | prepend: site.baseurl | prepend: site.url }}">{{item.name}}</a></li>
+                        {% endunless %}
                         {% endfor %}
                    		</ul>
                     </li><!--/end ministries-->
