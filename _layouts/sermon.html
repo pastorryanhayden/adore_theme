@@ -8,9 +8,8 @@ layout: default
         	<div class="title-subtitle-holder-inner">
     			<h2>{{page.title}}</h2>
            	</div>
-        </div>
-    </div>
-    <!-- End Page Header -->
+        </div><!--/title-subtitle-holder-->
+    </div><!-- End Page Header -->
     <!-- Breadcrumbs -->
     <div class="lgray-bg breadcrumb-cont">
     	<div class="container">
@@ -20,8 +19,8 @@ layout: default
             	<li><a href="#">{{page.series_title}}</a></li>
             	<li class="active">{{page.title}}</li>
           	</ol>
-        </div>
-    </div>
+        </div><!--container-->
+    </div><!--breadcrumbs-->
     <!-- Start Body Content -->
   	<div class="main" role="main">
     	<div id="content" class="content full">
@@ -42,7 +41,7 @@ layout: default
                                             <li><a href="{{ page.title | datapage_url: 'sermons' | prepend: site.baseurl | prepend: site.url }}" data-toggle="tooltip" data-placement="right" data-original-title="Download PDF"><i class="icon-paper-sheet"></i></a></li>
                                             {% endif %}
                                         </ul>
-                          	</div>
+                          	</div><!--/sermon-media-links-->
                             <div class="sermon-media-right">
                             	<div class="sermon-media-content">
                                     <img src="{{page.series_featured_image[0].url}}" />
@@ -67,7 +66,7 @@ layout: default
                                         <li class="twitter"><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
                                         <li class="googleplus"><a href="https://plus.google.com/"><i class="fa fa-google-plus"></i></a></li>
                                     </ul>
-                                </div>
+                                </div><!--/social-share-bar-->
                           	</div>
                        	</div>
                     </div>
@@ -93,9 +92,23 @@ layout: default
                       				</ul>
                               {{ page.speaker_bio[0] | markdownify }}
                         </div><!--/widget-speaker-->
-                    </div>
-                </div>
-         	</div>
-        </div>
-   	</div>
+                        <div class="widget sidebar-widget latest_sermons_widget">
+                        	<h3 class="widgettitle">More from this Series</h3>
+              				<ul>
+                            	{% for sermon in site.data.sermons%}
+                                   {% if sermon.series_title == page.series_title %}
+                                <li>
+                                 	<a href="{{ sermon.title | datapage_url: 'sermons' | prepend: site.baseurl | prepend: site.url }}"><strong class="post-title">{{sermon.title}}</strong></a>
+                                        <div class="meta-data">by <a href="#">{{sermon.speaker_name}}</a> in <a href="#">{{sermon.series_title}}</a></div>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+
+                      	    </ul>
+                        </div><!--/widget-speaker-->
+                    </div><!--/col-md-4-->
+                </div><!--/row-->
+         	</div><!--/container-->
+        </div><!--content-->
+   	</div><!--/main-->
     <!-- End Body Content -->
